@@ -1,0 +1,25 @@
+The C program is designed to implement basic shell commands as well as maintain and show history of all called commands.
+Here is a brief explanation of what the different function do:
+
+1. history_add(const char* command) : The function takes in the user input and adds it to an array to keep track of all commands in the order they were called in.
+
+2. show_history() : Displays the history of commands by iterating through the history[] array 
+
+3. tokenize(char* input, char** args) : Breaks a command the input command string into individual arguments. Uses strtok() function to do this and stores it in the args[] array.
+
+4. execute_background_cmd(char* input) : The function is used to run a command in the background, which is called from main if the command has '&'. Calls tokenize() to get arguments and then uses fork() to get the child process. The execvp() function executes the command in this function as well as others.. The parent does not wait for the child, allowing it to run in the background.
+
+5. execute_command(char* input) : Executes a command similar to the previous function but here the parent waits for the child to finish running, thus the main function also has to wait for the execution to be complete.
+
+6. execute_command_pipe(char* input) : Executes commands that have two commands split by '|'. Uses strtok() to split the command into two separate commands. Creates a pipe with two fds, fd[0] for reading and fd[1] for writing. The fork command is called where the first child process writes into fd[1] and the second child process will read from fd[0], with commands executed using execvp() as with other functions.
+
+7. main() : We start by using the fgets() function to get input from the user. If the user calls history commands it shows history and breaks the infinite loop if exit is called. Otherwise the main checks if the commands is a pipe (|), background (&) or regular command and calls the appropriate functions to execute the command.
+
+Contribution:
+Ammar - 
+1. Implementation and assisted in debugging
+2. Documentation
+
+Aaron -
+1. Assisted in implementation and debugging 
+2. Preparation of Design File
